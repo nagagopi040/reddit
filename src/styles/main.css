@@ -1,0 +1,56 @@
+.upvote, .downvote {
+    margin: 0;
+    width: 25px;
+    height: 25px;
+    align-content: center;
+    color: grey;    
+    opacity: 0.6;
+}
+
+.upvote {
+    transform: rotate(-90deg);
+}
+
+.upvote:hover {
+    color: red;
+}
+
+.downvote {
+    transform: rotate(90deg);
+}
+
+.downvote:hover {
+    color: green;
+}
+
+.upcount {
+    margin-bottom: 0 !important;
+}
+
+.post-title {
+    opacity: 0.6;
+}
+
+.flair-text {
+    background: rgb(237, 239, 241);
+    padding: 0 5px;
+}
+
+.poster-image {
+    max-height: 512px;
+    max-width: 512px;
+    object-fit: cover;
+}
+
+.modal-post img, .modal-post video {
+    height: 512px !important;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 768px) {    
+    .poster-image {
+        height: auto;
+        max-width: 100%;
+        object-fit: cover;
+    }
+}
