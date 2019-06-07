@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { CardTitle, CardText } from "reactstrap";
+import { CardTitle } from "reactstrap";
 
+// Component for rendering Author Info
 export class AuthorInfo extends Component {
     render() {
         const { author, author_flair_text,  } =this.props;

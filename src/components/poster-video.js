@@ -11,6 +11,7 @@ export class PosterVideo extends Component {
         }
     }
 
+    // function to toggle modal popup
     onClick = () => {
         this.setState( prevState => ({
             modalOpen: !prevState.modalOpen

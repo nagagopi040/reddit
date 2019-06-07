@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, ModalBody, Card, ModalHeader, Button } from "reactstrap";
+import { Modal, ModalBody, Card, ModalHeader } from "reactstrap";
 
+// Modal Popup for Post
 export class PostModal extends Component {
     render() {
         const { modalOpen, mediaType, src } = this.props;

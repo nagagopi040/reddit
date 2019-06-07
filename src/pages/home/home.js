@@ -3,16 +3,27 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux";
 
 import { getReddits } from "./actions"
-import { PostCard } from "./../../components";
+import { PostCard, Loader } from "./../../components";
 
 class HomePage extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            isLoading: false
+        }
+    }
+
+    // Fetch Method for fetching Subreddits data
     componentDidMount() {
         let { subreddit } = this.props.match.params;
+        this.setState({isLoading: true})
         fetch(`https://www.reddit.com/r/${subreddit ? subreddit: "all"}.json`)
             .then( res => res.json())
             .then( response => {
                 const data = response.data ? response.data : [];
                 this.props.getReddits(data);
+                this.setState({isLoading: false})
             })
     }
 
@@ -27,6 +38,9 @@ class HomePage extends Component {
                             <PostCard postData={post}  key={post.data.id}/>
                         )
                     })
+                }
+                {
+                    this.state.isLoading &&  <Loader />
                 }
             </div>
         )

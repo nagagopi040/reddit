@@ -7,27 +7,12 @@ export class PosterImage extends Component {
         super(props);
 
         this.state = {
-            newImageUrl: "",
-            image: {},
-            source: {},
             modalOpen: false
         }
     }
-    componentDidMount(){
-        const { images } = this.props;
-        const { resolutions, source } = images;
-        let len = resolutions && resolutions.length-1;
-        if(len > 0){
-            let image =  resolutions[len];
-            let newImageUrl = Common.structureUrl(image.url);
-            this.setState({
-                newImageUrl,
-                image,
-                source
-            })
-        }
-    }
 
+
+    // function to toggle modal popup
     onClick = () => {
         this.setState( prevState => ({
             modalOpen: !prevState.modalOpen
@@ -35,14 +20,15 @@ export class PosterImage extends Component {
     }
 
     render() {
-        const { newImageUrl, modalOpen } = this.state;
-        const { thumbnail_url, type } = this.props.images;
+        const { modalOpen } = this.state;
+        const { thumbnail_url, type, source } = this.props.images;
         return (
             <div>
+                {/* Method to Render Gif and Image*/}
                 <a href="javascript:void(0)" onClick={this.onClick}>
-                    <img src={type==="video" ? thumbnail_url : newImageUrl} className="poster-image img-fluid" />
+                    <img src={type==="video" ? thumbnail_url : Common.structureUrl(source.url)} className="poster-image img-fluid" />
                 </a>
-                <PostModal src={newImageUrl} mediaType="image" onClick={this.onClick} modalOpen={modalOpen} />
+                <PostModal src={type==="video" ? thumbnail_url : Common.structureUrl(source.url)} mediaType="image" onClick={this.onClick} modalOpen={modalOpen} />
             </div>
         );
     }

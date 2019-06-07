@@ -9,6 +9,8 @@ import {
   NavLink
 } from 'reactstrap';
 
+import { Common } from "./../utils"
+
 export class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,9 @@ export class Header extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+
   render() {
+    let subredditParam = location.pathname;
     return (
       <div>
         <Navbar color="light" light expand="md">
@@ -32,11 +36,17 @@ export class Header extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/" active>All</NavLink>
+                <NavLink href="/" active={subredditParam === "/" ? true : false}>All</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink href="/cats">Cats</NavLink>
-              </NavItem>
+              {
+                Common.subreddits.map( subreddit => {
+                  return(
+                    <NavItem key={subreddit.subreddit}>
+                      <NavLink href={`/${subreddit.subreddit}`} active={subredditParam === `/${subreddit.subreddit}` ? true : false}>{subreddit.title}</NavLink>
+                    </NavItem>
+                  )
+                })
+              }
             </Nav>
           </Collapse>
         </Navbar>
