@@ -3,8 +3,23 @@ import { Modal, ModalBody, Card, ModalHeader } from "reactstrap";
 
 // Modal Popup for Post
 export class PostModal extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            modalOpen: false
+        }
+    }
+
+    // function to toggle modal popup
+    onClick = () => {
+        this.setState( prevState => ({
+            modalOpen: !prevState.modalOpen
+        }))
+    }
+
     render() {
-        const { modalOpen, mediaType, src } = this.props;
+        const { mediaType, src, modalOpen } = this.props;
         return (
             <Modal size="lg" isOpen={modalOpen} toggle={() => this.props.onClick()} >
                 <ModalHeader className="border-0 py-0" toggle={() => this.props.onClick()} />

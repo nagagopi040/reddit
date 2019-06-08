@@ -20,29 +20,48 @@ export class PostCard extends Component {
         })
     }
 
+
+    // method for diffrentiating between the post
+    renderPoster = (secure_media, preview) => {
+        if(secure_media){
+            let { reddit_video, oembed } = secure_media;
+            if(reddit_video){
+                let url = reddit_video.fallback_url  ? Common.structureUrl(reddit_video.fallback_url) : "";
+                return  <PosterVideo src={url} mediaType="video" />
+            }
+            if(oembed) {
+                let url = oembed.thumbnail_url ? Common.structureUrl(oembed.thumbnail_url) : "";
+                return <PosterImage src={url} mediaType="image" />
+            }
+        } else if(preview) {
+            let image = preview && preview.images && preview.images[0].source ? preview.images[0].source : {};
+            let url = image.url  ? Common.structureUrl(image.url) : "";
+            return <PosterImage src={url} mediaType="image" />
+        }
+        return null;
+    }
+
     render() {
         const { postData } = this.state;
-        const { title, ups, secure_media, author, author_flair_text, preview, num_comments, url } = postData;
+        const { title, ups, secure_media, author, author_flair_text, preview, num_comments } = postData;
         return (
             <Card className="my-4">
                 <Row>
                     { /*Render Method for Votes */}
                     <Col className="col-2 col-md-1">
-                        <CardBody className="d-flex flex-column justify-content-center align-items-center">
+                        <CardBody className="d-flex flex-column justify-content-center align-items-center mx-1">
                             <CardLink className="upvote" href="javaScript:void(0);">&#x27A7;</CardLink>
                             <CardTitle className="upcount font-weight-bold">{Common.convertNumber(ups)}</CardTitle>
-                            <CardLink className="downvote" href="JavaScript:Void(0);">&#x27A7;</CardLink>
+                            <CardLink className="downvote" href="javaScript:void(0);">&#x27A7;</CardLink>
                         </CardBody>
                     </Col>
                     { /*Render Method for content */}
-                    <Col className="col-9 col-md-10">
+                    <Col className="col-10 col-md-11">
                         <CardBody>
                             <AuthorInfo author={author} author_flair_text={author_flair_text} />
                             <CardTitle className="post-title font-weight-bold">{title}</CardTitle>
-                            {!secure_media && !(secure_media && secure_media.oembed) && preview && <PosterImage images={preview.images[0]} />}
-                            {secure_media && secure_media.oembed && <PosterImage images={secure_media.oembed} />}
-                            {secure_media && secure_media.reddit_video && <PosterVideo reddit_video={secure_media.reddit_video} />}
-                            <CardText>{num_comments} Comments</CardText>
+                            {this.renderPoster(secure_media, preview)}
+                            {num_comments >0 && <CardText>{num_comments} Comments</CardText>}
                         </CardBody>
                     </Col>
                 </Row>
